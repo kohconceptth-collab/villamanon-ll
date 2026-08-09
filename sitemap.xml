@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://villamanon-ll.kohconcept.com/</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://villamanon-ll.kohconcept.com/assets/images/image-03-5b6b72ad05.webp</image:loc>
+      <image:title>Villa Manon private pool in Rawai, Phuket</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://villamanon-ll.kohconcept.com/assets/images/plan-3d-villa-manon-corrige.png</image:loc>
+      <image:title>Villa Manon 3D floor plan</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://villamanon-ll.kohconcept.com/assets/images/image-06-74e66adf2f.webp</video:thumbnail_loc>
+      <video:title>Discover Rawai, Phuket</video:title>
+      <video:description>Discover Rawai and the tropical lifestyle surrounding Villa Manon in Phuket.</video:description>
+      <video:content_loc>https://villamanon-ll.kohconcept.com/assets/videos/rawai-district-phuket.mp4</video:content_loc>
+    </video:video>
+  </url>
+</urlset>

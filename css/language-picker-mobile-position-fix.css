@@ -1,0 +1,24 @@
+@media (max-width:760px){
+  .nav{position:relative}
+  .navlinks{position:relative}
+  .navlinks .language-picker{
+    position:absolute;
+    top:22px;
+    right:22px;
+    margin:0;
+    z-index:120;
+  }
+  .navlinks .language-picker__button{
+    min-width:64px;
+    height:36px;
+    padding:0 11px;
+  }
+  .navlinks .language-picker__menu{
+    top:calc(100% + 8px);
+    right:0;
+    min-width:86px;
+  }
+  .navlinks .cta{
+    margin-top:28px;
+  }
+}

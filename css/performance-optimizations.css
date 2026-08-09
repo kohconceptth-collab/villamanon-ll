@@ -1,0 +1,7 @@
+@media (min-width:700px){
+  main .section:not(:first-child){
+    content-visibility:auto;
+    contain-intrinsic-size:1px 900px;
+  }
+}
+img{height:auto}

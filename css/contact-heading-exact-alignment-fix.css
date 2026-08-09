@@ -1,0 +1,18 @@
+/* Alignement exact des titres de la section contact sur tablette et PC */
+@media (min-width:700px){
+  #contact .contact-grid > div:nth-child(2) > h3,
+  #contact .contact-grid > div:nth-child(3) > h3,
+  #contact .contact-grid > div:nth-child(4) > h3{
+    margin-top:0 !important;
+  }
+
+  #contact .contact-grid > div:nth-child(1),
+  #contact .contact-grid > div:nth-child(2){
+    padding-top:0 !important;
+    transform:none !important;
+  }
+
+  #contact .owner h3{
+    margin-top:0 !important;
+  }
+}

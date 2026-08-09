@@ -1,0 +1,23 @@
+@media (max-width:767px){
+  /* Section 5 : rythme identique aux autres sections */
+  #rawai-lifestyle .rawai-combined{
+    display:block !important;
+  }
+
+  #rawai-lifestyle .number-title{
+    margin:0 0 22px !important;
+    min-height:0 !important;
+  }
+
+  #rawai-lifestyle .map-wrap{
+    margin:0 0 22px !important;
+  }
+
+  #rawai-lifestyle .rawai-intro{
+    margin:0 0 22px !important;
+  }
+
+  #rawai-lifestyle .local-grid{
+    margin:0 !important;
+  }
+}

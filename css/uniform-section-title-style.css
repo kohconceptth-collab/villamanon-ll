@@ -1,0 +1,23 @@
+/* Tous les titres prennent exactement le style du simulateur */
+.number-title{
+ display:flex!important;
+ align-items:flex-start!important;
+ gap:12px!important;
+ font-family:Inter,Segoe UI,Arial,sans-serif!important;
+ font-size:clamp(1.08rem,1.15vw,1.28rem)!important;
+ font-weight:900!important;
+ text-transform:uppercase!important;
+ letter-spacing:.06em!important;
+ line-height:1.15!important;
+ margin:0 0 18px!important;
+ color:inherit!important;
+}
+.number-title>span:first-child{
+ color:var(--gold)!important;
+ min-width:28px!important;
+ font:inherit!important;
+}
+#investment .number-title,
+#investment .number-title>span:last-child{
+ color:#fff!important;
+}

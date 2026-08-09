@@ -1,0 +1,93 @@
+/* Le simulateur fermé ne conserve plus un grand rectangle vide. */
+#investment{
+  min-height:0!important;
+  height:auto!important;
+}
+
+#investment .invest-shell,
+#investment .investment-shell,
+#investment .simulator-shell,
+#investment .roi-shell{
+  min-height:0!important;
+  height:auto!important;
+}
+
+/* État fermé : seul l'en-tête reste visible, sans espace réservé au contenu. */
+#investment:not(.open) .invest-panel,
+#investment:not(.is-open) .invest-panel,
+#investment:not(.active) .invest-panel,
+#investment .invest-panel[hidden],
+#investment .simulator-content[hidden],
+#investment .roi-content[hidden],
+#investment .collapse-content[hidden]{
+  display:none!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+
+/* Les conteneurs repliés ne doivent jamais imposer de hauteur. */
+#investment [aria-hidden="true"],
+#investment .collapsed{
+  min-height:0!important;
+  max-height:0!important;
+  height:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+  overflow:hidden!important;
+}
+
+/* Quand le contenu est ouvert, le fond sombre accompagne uniquement la partie révélée. */
+#investment .invest-panel,
+#investment .simulator-content,
+#investment .roi-content,
+#investment .collapse-content{
+  min-height:0!important;
+  height:auto;
+}
+
+/* Suppression de toute hauteur fixe héritée sur ordinateur et tablette. */
+@media (min-width:700px){
+  #investment,
+  #investment .invest-shell,
+  #investment .investment-shell,
+  #investment .simulator-shell,
+  #investment .roi-shell{
+    min-height:0!important;
+    height:auto!important;
+  }
+}
+
+.final-hero{
+min-height:65vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:80px 20px;
+color:#fff;
+background-image:linear-gradient(90deg,rgba(2,10,16,.95) 0%,rgba(3,12,18,.72) 35%,rgba(3,12,18,.16) 70%),url('data:image/jpeg;
+background-size:cover;
+background-position:center;
+}
+.final-hero h2{font-size:18px;letter-spacing:.35em;text-transform:uppercase;color:#e0b665;margin:0}
+.final-hero .price{font-family:Georgia,serif;font-size:clamp(46px,8vw,90px);font-weight:700;margin:18px 0}
+.final-hero p{font-size:clamp(18px,2vw,28px);margin:0}
+
+.contact button,.contact .btn-email,.contact button i,.contact .btn-email i{
+color:#fff!important;
+fill:#fff!important;
+}
+.contact button{
+display:inline-flex!important;
+align-items:center;
+justify-content:center;
+gap:12px;
+font-weight:700;
+}

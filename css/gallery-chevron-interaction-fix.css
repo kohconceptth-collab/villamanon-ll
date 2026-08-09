@@ -1,0 +1,22 @@
+/* Les chevrons restent cliquables sur ordinateur et tablette,
+   au-dessus de la piste et de la zone de glissement. */
+.gallery-modal__nav{
+  z-index:30 !important;
+  pointer-events:auto !important;
+  touch-action:manipulation !important;
+  user-select:none !important;
+  -webkit-user-select:none !important;
+}
+.gallery-modal__track,
+.gallery-modal__slide,
+.gallery-modal__slide img{
+  pointer-events:none;
+}
+.gallery-modal__viewport{
+  touch-action:pan-y pinch-zoom;
+}
+@media (min-width:621px){
+  .gallery-modal__nav{
+    display:grid !important;
+  }
+}

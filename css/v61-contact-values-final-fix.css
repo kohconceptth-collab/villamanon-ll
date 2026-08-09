@@ -1,0 +1,33 @@
+/* V61 — correction strictement limitée aux trois coordonnées de la section contact. */
+#contact .contact-lines .contact-value,
+#contact .contact-lines a.contact-value,
+#contact .contact-lines .contact-value.email-value {
+  font-family: inherit !important;
+  font-size: clamp(.92rem, 3.7vw, 1.15rem) !important;
+  font-weight: 800 !important;
+  font-style: normal !important;
+  line-height: 1.25 !important;
+  letter-spacing: 0 !important;
+  color: inherit !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  text-align: right !important;
+}
+@media (min-width: 621px) {
+  #contact .contact-lines .contact-value,
+  #contact .contact-lines a.contact-value,
+  #contact .contact-lines .contact-value.email-value {
+    font-size: 1rem !important;
+  }
+}
+@media (max-width: 420px) {
+  #contact .contact-line {
+    grid-template-columns: 22px 68px minmax(0,1fr) !important;
+    gap: 6px !important;
+  }
+  #contact .contact-lines .contact-value,
+  #contact .contact-lines a.contact-value,
+  #contact .contact-lines .contact-value.email-value {
+    font-size: .92rem !important;
+  }
+}

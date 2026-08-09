@@ -1,0 +1,42 @@
+.number-title{
+  display:flex !important;
+  align-items:flex-start !important;
+  gap:10px !important;
+  margin:0 0 18px !important;
+  padding:0 !important;
+  font-family:Inter,Segoe UI,Arial,sans-serif !important;
+  font-size:.9rem !important;
+  font-weight:800 !important;
+  line-height:1.18 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+}
+.number-title>span:first-child{
+  flex:0 0 auto !important;
+  min-width:24px !important;
+  margin:0 !important;
+  color:var(--gold) !important;
+  font:inherit !important;
+}
+.number-title>span:last-child{
+  min-width:0 !important;
+  margin:0 !important;
+  color:inherit !important;
+  font:inherit !important;
+}
+#investment .number-title>span:first-child{color:var(--gold2)!important}
+#investment .number-title>span:last-child{color:#fff!important}
+#floor-plan .number-title{margin-bottom:14px!important}
+@media(max-width:767px){
+  .number-title{
+    gap:7px !important;
+    margin-bottom:16px !important;
+    font-size:clamp(.82rem,3.5vw,.98rem) !important;
+    line-height:1.2 !important;
+    letter-spacing:.035em !important;
+  }
+  .number-title>span:first-child{min-width:22px!important}
+}
+@media(min-width:768px){
+  .number-title{min-height:2.25em!important}
+}

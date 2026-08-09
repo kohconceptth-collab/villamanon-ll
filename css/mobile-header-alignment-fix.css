@@ -1,0 +1,70 @@
+@media (max-width: 760px){
+  header .nav{
+    min-height:88px!important;
+    height:88px!important;
+    padding:18px 0!important;
+    display:flex!important;
+    align-items:center!important;
+  }
+
+  header .brand{
+    height:52px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    line-height:0!important;
+    transform:translateY(5px)!important;
+  }
+
+  header .brand img{
+    display:block!important;
+    width:auto!important;
+    height:52px!important;
+    max-height:52px!important;
+    max-width:240px!important;
+    margin:0!important;
+    object-fit:contain!important;
+    object-position:left center!important;
+  }
+
+  header .hamb{
+    width:52px!important;
+    height:52px!important;
+    min-width:52px!important;
+    padding:0!important;
+    margin:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    line-height:1!important;
+    transform:none!important;
+  }
+}
+
+.final-hero{
+min-height:65vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:80px 20px;
+color:#fff;
+background-image:linear-gradient(90deg,rgba(2,10,16,.95) 0%,rgba(3,12,18,.72) 35%,rgba(3,12,18,.16) 70%),url('data:image/jpeg;
+background-size:cover;
+background-position:center;
+}
+.final-hero h2{font-size:18px;letter-spacing:.35em;text-transform:uppercase;color:#e0b665;margin:0}
+.final-hero .price{font-family:Georgia,serif;font-size:clamp(46px,8vw,90px);font-weight:700;margin:18px 0}
+.final-hero p{font-size:clamp(18px,2vw,28px);margin:0}
+
+.contact button,.contact .btn-email,.contact button i,.contact .btn-email i{
+color:#fff!important;
+fill:#fff!important;
+}
+.contact button{
+display:inline-flex!important;
+align-items:center;
+justify-content:center;
+gap:12px;
+font-weight:700;
+}

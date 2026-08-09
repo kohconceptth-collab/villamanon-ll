@@ -1,0 +1,18 @@
+#sendEmail,
+#sendEmail span,
+#sendEmail i,
+#sendEmail i::before {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+#exitFullscreenBtn,
+#exitFullscreenBtn svg,
+#exitFullscreenBtn svg path {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  fill: none !important;
+  stroke: #ffffff !important;
+}

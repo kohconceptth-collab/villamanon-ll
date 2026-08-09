@@ -1,0 +1,77 @@
+@media (max-width:767px){
+
+  /* Rythme vertical commun */
+  :root{
+    --mobile-section-gap:24px;
+    --mobile-block-gap:40px;
+  }
+
+  /* Blocs 1, 2 et 3 à l'intérieur de la même section */
+  #villa{
+    padding-top:38px !important;
+    padding-bottom:var(--mobile-section-gap) !important;
+  }
+
+  #villa .grid-3{
+    display:grid !important;
+    gap:var(--mobile-block-gap) !important;
+  }
+
+  #villa .grid-3 > div{
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  #villa .number-title{
+    margin:0 0 22px !important;
+  }
+
+  /* Espace identique entre la section 3 et la section 4 */
+  #floor-plan{
+    margin:0 !important;
+    padding-top:var(--mobile-section-gap) !important;
+    padding-bottom:38px !important;
+  }
+
+  /* Section 5 */
+  #rawai-lifestyle{
+    margin:0 !important;
+    padding-top:38px !important;
+    padding-bottom:var(--mobile-section-gap) !important;
+  }
+
+  #rawai-lifestyle .number-title{
+    margin:0 0 22px !important;
+  }
+
+  #rawai-lifestyle .map-wrap{
+    margin:0 0 28px !important;
+  }
+
+  #rawai-lifestyle .rawai-intro{
+    margin:0 0 28px !important;
+  }
+
+  #rawai-lifestyle .local-grid{
+    margin:0 !important;
+  }
+
+  /* Section 6 : plus de double espace avant le panneau sombre */
+  #investment{
+    margin:0 !important;
+    padding-top:var(--mobile-section-gap) !important;
+    padding-bottom:var(--mobile-section-gap) !important;
+  }
+
+  #investment > .wrap.sim{
+    width:calc(100% - 32px) !important;
+    max-width:calc(100% - 32px) !important;
+    margin:0 auto !important;
+  }
+
+  /* Section suivante : même distance après le simulateur */
+  #investment + .section{
+    margin:0 !important;
+    padding-top:var(--mobile-section-gap) !important;
+  }
+}
