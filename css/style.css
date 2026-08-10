@@ -396,6 +396,14 @@ body.gallery-open{overflow:hidden}
 @media(max-width:820px){.plan-heading{grid-template-columns:1fr}.plan-stats{grid-template-columns:repeat(4,1fr)}.plan-stats span{padding:10px 8px;text-align:center}.plan-stage{padding:6px;border-radius:15px}.plan-stage>img{border-radius:10px}.plan-hotspots{inset:6px}.hotspot{width:29px;height:29px;font-size:.76rem}.plan-expand{right:13px;bottom:13px;padding:9px 11px}.plan-expand span{display:none}.plan-info{left:14px;bottom:14px;width:calc(100% - 72px);padding:14px 38px 14px 14px}.plan-switcher{width:100%}.plan-tab{flex:1}.plan-hint{font-size:.75rem}}
 @media(max-width:520px){.plan-stats{grid-template-columns:repeat(2,1fr)}.plan-stage{overflow:visible;margin-inline:-6px}.plan-info{position:relative;left:auto;bottom:auto;width:100%;margin-top:8px;display:none;opacity:1;transform:none;background:#0b1e2b}.plan-info.open{display:block}.plan-expand{bottom:12px}.hotspot{width:26px;height:26px}.plan-heading{gap:16px}}
 
+/* Tablette et ordinateur : plan contenu dans la hauteur de navigation courante. */
+@media (min-width:621px){
+  .plan-stage{
+    width:min(86vw,800px);
+    margin-inline:auto;
+  }
+}
+
 /* V9 — transparent logo and refined hero typography */
 .brand{display:flex;align-items:center;line-height:0}
 .brand img{

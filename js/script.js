@@ -16,6 +16,19 @@ investmentSimulatorToggle.addEventListener('click',()=>{
   }
 });
 const menu=document.querySelector('#menu'),hamb=document.querySelector('#hamb');hamb.addEventListener('click',()=>menu.classList.toggle('open'));document.addEventListener('keydown',e=>{if(e.key==='Escape')menu.classList.remove('open')});document.addEventListener('click',e=>{if(menu.classList.contains('open')&&!menu.contains(e.target)&&e.target!==hamb)menu.classList.remove('open')});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
+const galleryPreviewReplacements=[
+  {position:1,src:'assets/images/image-20-748c9482b2.webp',alt:'Villa Manon sala and pool terrace',galleryIndex:5},
+  {position:2,src:'assets/images/image-22-06edf2089a.webp',alt:'Villa Manon living room facing the pool',galleryIndex:7},
+  {position:3,src:'assets/images/image-23-f837eb1e2a.webp',alt:'Villa Manon open-plan living room and kitchen',galleryIndex:8}
+];
+const galleryPreviewImages=[...document.querySelectorAll('.gallery-grid img')];
+galleryPreviewReplacements.forEach(({position,src,alt,galleryIndex})=>{
+  const image=galleryPreviewImages[position];
+  if(!image) return;
+  image.src=src;
+  image.alt=alt;
+  image.dataset.galleryIndex=galleryIndex;
+});
 const bedroomGallery=document.querySelector('#bedroomGallery');
 const galleryTrack=document.querySelector('#galleryTrack');
 const galleryCurrent=document.querySelector('#galleryCurrent');
@@ -48,7 +61,9 @@ document.querySelectorAll('[data-open-gallery]').forEach(el=>el.addEventListener
     return;
   }
   const img=e.target.closest('img');
-  const idx=img?[...document.querySelectorAll('.gallery-grid img')].indexOf(img):0;
+  const idx=img&&img.dataset.galleryIndex!==undefined
+    ? Number(img.dataset.galleryIndex)
+    : (img?[...document.querySelectorAll('.gallery-grid img')].indexOf(img):0);
   openGallery(Math.max(0,idx));
 }));
 document.querySelector('#galleryClose').addEventListener('click',closeGallery);
@@ -108,7 +123,7 @@ whyTitle:'What makes Villa Manon unique',
 why1:'A sought-after location in Rawai, combining peace, beaches, restaurants and everyday amenities',
 why2:'Bright, flowing spaces designed for a natural indoor-outdoor lifestyle',
 why3:'A private pool, terrace and garden designed to make the most of the tropical climate',
-why4:'Four bedrooms and four bathrooms offering comfort and privacy for family and guests',
+why4:'Four bedrooms and five bathrooms offering comfort and privacy for family and guests',
 why5:'A fully furnished villa, ready to enjoy from day one',
 featuresTitle:'Main features',featuresCatContract:'Property information',featuresCatVilla:'The villa',featuresCatEquipment:'Equipment',galleryTitle:'Photo gallery',floorTitle:'Villa floor plan',
 floorExploreTitle:'Explore the layout of Villa Manon',
@@ -279,6 +294,237 @@ Object.assign(t.en,{"pageTitle": "Villa Manon — Rawai, Phuket", "destinationEy
 Object.assign(t.fr,{"pageTitle": "Villa Manon — Rawai, Phuket", "destinationEyebrow": "Destination", "discoverRawaiTitle": "À la découverte de Rawai", "discoverRawaiText": "Découvrez l’atmosphère de Rawai, ses plages, ses restaurants, ses marchés, ses îles et son art de vivre tropical avant de visiter Villa Manon.", "rawaiVideoTitle": "Découvrir Rawai en vidéo", "rawaiVideoPlaceholder": "", "featLeasehold": "Bail de 30 ans renouvelable", "featLand": "Terrain d’environ 400 m²", "featBuilt": "Surface construite d’environ 250 m²", "featBedrooms": "4 chambres spacieuses", "featBathrooms": "4 salles de bains modernes", "featPool": "Piscine privée de 7 × 3 m", "featKitchen": "Cuisine entièrement équipée", "featTV": "Téléviseur Samsung QLED 75 pouces", "featGate": "Portail automatique et parking couvert", "featWell": "Puits profond de 100 m", "featAircon": "Climatisation et ventilateurs de plafond", "featWatering": "Système d’arrosage automatique du jardin", "featInternet": "Internet fibre haut débit", "villaSectionEyebrow": "04 — Villa Manon", "naiHarnBeach": "Plage de Nai Harn", "rawaiBeach": "Plage de Rawai", "promthepCape": "Cap Promthep", "rawaiMarket": "Marché de Rawai", "watChalong": "Wat Chalong", "bigBuddha": "Grand Bouddha", "fiveMin": "5 min", "fifteenMin": "15 min", "twentyFiveMin": "25 min", "perMonth": "/ mois", "perYear": "/ an", "priceLabel": "Prix", "ownershipLabel": "Type de propriété", "ownershipValue": "Bail de 30 ans", "landTitleLabel": "Titre foncier", "chanoteValue": "Chanote", "transferFeesLabel": "Frais de transfert", "furnishingLabel": "Mobilier", "furnishingValue": "Entièrement meublée", "availabilityLabel": "Disponibilité", "availabilityValue": "Immédiate", "valuePrimeLocation": "Emplacement privilégié à Rawai", "valueQuietLand": "400 m² dans un environnement résidentiel calme", "valueConstruction": "Construction récente et finitions de qualité", "valueRoomsPool": "4 chambres, 4 salles de bains et piscine privée", "valueReady": "Entièrement meublée et prête à vivre", "valueRental": "Fort potentiel locatif et valeur à long terme", "propertyOwnerBadge": "Propriétaire", "rawaiPhuketBadge": "Rawai, Phuket", "languagesBadge": "EN / FR", "phoneLabel": "Téléphone", "emailLabel": "E-mail", "whatsappQrTitle": "QR code WhatsApp", "galleryModalTitle": "Villa Manon — Galerie photos", "villaManonLabel": "Villa Manon", "zoneLabel": "Zone", "blueprintCaption": "Villa Manon — Plan architectural", "zoomHint": "Pincez ou touchez deux fois pour zoomer"});
 Object.assign(t.ru,{"pageTitle": "Villa Manon — Раваи, Пхукет", "destinationEyebrow": "Направление", "discoverRawaiTitle": "Откройте для себя Раваи", "discoverRawaiText": "Познакомьтесь с атмосферой Раваи, его пляжами, ресторанами, рынками, островами и тропическим образом жизни перед посещением Villa Manon.", "rawaiVideoTitle": "Откройте Раваи на видео", "rawaiVideoPlaceholder": "Добавьте сюда видео YouTube, Vimeo или MP4.", "featLeasehold": "Аренда на 30 лет с возможностью продления", "featLand": "Площадь участка: около 400 м²", "featBuilt": "Площадь застройки: около 250 м²", "featBedrooms": "4 просторные спальни", "featBathrooms": "4 современные ванные комнаты", "featPool": "Частный бассейн 6 × 3 м", "featKitchen": "Полностью оборудованная кухня", "featTV": "Телевизор Samsung QLED 75 дюймов", "featGate": "Автоматические ворота и крытая парковка", "featWell": "Скважина глубиной 100 м", "featAircon": "Кондиционеры и потолочные вентиляторы", "featWatering": "Автоматическая система полива сада", "featInternet": "Высокоскоростной оптоволоконный интернет", "villaSectionEyebrow": "04 — Villa Manon", "naiHarnBeach": "Пляж Най Харн", "rawaiBeach": "Пляж Раваи", "promthepCape": "Мыс Промтеп", "rawaiMarket": "Рынок Раваи", "watChalong": "Ват Чалонг", "bigBuddha": "Большой Будда", "fiveMin": "5 мин", "fifteenMin": "15 мин", "twentyFiveMin": "25 мин", "perMonth": "/ месяц", "perYear": "/ год", "priceLabel": "Цена", "ownershipLabel": "Форма владения", "ownershipValue": "Аренда на 30 лет", "landTitleLabel": "Документ на землю", "chanoteValue": "Чанот", "transferFeesLabel": "Сборы за передачу", "furnishingLabel": "Меблировка", "furnishingValue": "Полностью меблирована", "availabilityLabel": "Доступность", "availabilityValue": "Сразу", "valuePrimeLocation": "Престижное расположение в Раваи", "valueQuietLand": "400 м² в тихом жилом районе", "valueConstruction": "Недавняя постройка и качественная отделка", "valueRoomsPool": "4 спальни, 4 ванные комнаты и частный бассейн", "valueReady": "Полностью меблирована и готова к заселению", "valueRental": "Высокий арендный потенциал и долгосрочная ценность", "propertyOwnerBadge": "Владелец недвижимости", "rawaiPhuketBadge": "Раваи, Пхукет", "languagesBadge": "EN / FR", "phoneLabel": "Телефон", "emailLabel": "Электронная почта", "whatsappQrTitle": "QR-код WhatsApp", "galleryModalTitle": "Villa Manon — Фотогалерея", "villaManonLabel": "Villa Manon", "zoneLabel": "Зона", "blueprintCaption": "Villa Manon — Архитектурный план", "zoomHint": "Сведите пальцы или дважды коснитесь для увеличения"});
 Object.assign(t.th,{"pageTitle": "Villa Manon — ราไวย์ ภูเก็ต", "destinationEyebrow": "จุดหมายปลายทาง", "discoverRawaiTitle": "ทำความรู้จักราไวย์", "discoverRawaiText": "สัมผัสบรรยากาศของราไวย์ ทั้งชายหาด ร้านอาหาร ตลาด เกาะต่าง ๆ และวิถีชีวิตแบบเขตร้อน ก่อนเข้าชม Villa Manon", "rawaiVideoTitle": "ชมราไวย์ผ่านวิดีโอ", "rawaiVideoPlaceholder": "เพิ่มวิดีโอ YouTube, Vimeo หรือ MP4 ของคุณที่นี่", "featLeasehold": "สิทธิการเช่า 30 ปี ต่ออายุได้", "featLand": "ขนาดที่ดินประมาณ 400 ตร.ม.", "featBuilt": "พื้นที่ก่อสร้างประมาณ 250 ตร.ม.", "featBedrooms": "4 ห้องนอนกว้างขวาง", "featBathrooms": "4 ห้องน้ำทันสมัย", "featPool": "สระว่ายน้ำส่วนตัวขนาด 6 × 3 ม.", "featKitchen": "ห้องครัวพร้อมอุปกรณ์ครบครัน", "featTV": "โทรทัศน์ Samsung QLED ขนาด 75 นิ้ว", "featGate": "ประตูอัตโนมัติและที่จอดรถมีหลังคา", "featWell": "บ่อน้ำลึก 100 ม.", "featAircon": "เครื่องปรับอากาศและพัดลมเพดาน", "featWatering": "ระบบรดน้ำสวนอัตโนมัติ", "featInternet": "อินเทอร์เน็ตไฟเบอร์ความเร็วสูง", "villaSectionEyebrow": "04 — Villa Manon", "naiHarnBeach": "หาดในหาน", "rawaiBeach": "หาดราไวย์", "promthepCape": "แหลมพรหมเทพ", "rawaiMarket": "ตลาดราไวย์", "watChalong": "วัดฉลอง", "bigBuddha": "พระใหญ่", "fiveMin": "5 นาที", "fifteenMin": "15 นาที", "twentyFiveMin": "25 นาที", "perMonth": "/ เดือน", "perYear": "/ ปี", "priceLabel": "ราคา", "ownershipLabel": "รูปแบบการถือครอง", "ownershipValue": "สิทธิการเช่า 30 ปี", "landTitleLabel": "เอกสารสิทธิ์ที่ดิน", "chanoteValue": "โฉนด", "transferFeesLabel": "ค่าธรรมเนียมการโอน", "furnishingLabel": "เฟอร์นิเจอร์", "furnishingValue": "พร้อมเฟอร์นิเจอร์ครบ", "availabilityLabel": "พร้อมเข้าอยู่", "availabilityValue": "ทันที", "valuePrimeLocation": "ทำเลเด่นในราไวย์", "valueQuietLand": "ที่ดิน 400 ตร.ม. ในย่านที่อยู่อาศัยอันเงียบสงบ", "valueConstruction": "ก่อสร้างใหม่และตกแต่งด้วยวัสดุคุณภาพ", "valueRoomsPool": "4 ห้องนอน 4 ห้องน้ำ และสระว่ายน้ำส่วนตัว", "valueReady": "พร้อมเฟอร์นิเจอร์ครบและเข้าอยู่ได้ทันที", "valueRental": "มีศักยภาพด้านการเช่าสูงและมูลค่าในระยะยาว", "propertyOwnerBadge": "เจ้าของทรัพย์สิน", "rawaiPhuketBadge": "ราไวย์ ภูเก็ต", "languagesBadge": "EN / FR", "phoneLabel": "โทรศัพท์", "emailLabel": "อีเมล", "whatsappQrTitle": "คิวอาร์โค้ด WhatsApp", "galleryModalTitle": "Villa Manon — แกลเลอรีภาพ", "villaManonLabel": "Villa Manon", "zoneLabel": "พื้นที่", "blueprintCaption": "Villa Manon — แปลนสถาปัตยกรรม", "zoomHint": "ใช้นิ้วบีบหรือแตะสองครั้งเพื่อซูม"});
+Object.assign(t.en,{
+  pageTitle:'Villa for Sale in Phuket, Rawai | Villa Manon',
+  why4:'Four bedrooms and five bathrooms offering comfort and privacy for family and guests',
+  featLeasehold:'30-year leasehold, renewable (many possibilities).',
+  featConstructionYear:'Construction: 2026',
+  featLand:'480 m² land size',featBathrooms:'5 bathrooms',
+  featTV:'Sala with Samsung QLED 75-inch TV',
+  featLivingTV:'Huge living room with Samsung QLED 75-inch TV',
+  featBedroomTV:'Every bedroom equipped with a Samsung QLED 65-inch TV',
+  featGasBarbecue:'Gas barbecue',
+  ownershipValue:'30-year leasehold, renewable (many possibilities).',
+  valueQuietLand:'480 m² land size in a quiet residential setting',
+  valueRoomsPool:'4 bedrooms, 5 bathrooms and a private pool',
+  closeLabel:'Close',previousPhotoLabel:'Previous photo',nextPhotoLabel:'Next photo',
+  showPhotoLabel:'Show photo',photoLabel:'photo',viewPhotosLabel:'View photos',
+  galleryDialogLabel:'Villa Manon photo gallery',zonePhotosDialogLabel:'Photos of the selected area',
+  mapDialogLabel:'Villa Manon location map',enlargeMapLabel:'Enlarge the location map',
+  openPlanFullscreenLabel:'Open floor plan fullscreen',
+  zoneBedroom1:'Bedroom 1 & bathroom',zoneBedroom2:'Bedroom 2 & bathroom',
+  zoneBedroom3:'Bedroom 3 & bathroom',zoneBedroom4:'Bedroom 4 & bathroom',
+  zoneLiving:'Living room & TV area',zoneKitchen:'Kitchen',zonePool:'Private pool',zoneSala:'Sala',
+  zoneBedroom1Info:'Private bedroom with direct access to its bathroom.',
+  zoneBedroom2Info:'Quiet bedroom beside the central living area.',
+  zoneBedroom3Info:'Spacious bedroom with integrated storage.',
+  zoneBedroom4Info:'Comfortable guest bedroom near the living room.',
+  zoneLivingInfo:'Large open-plan social space facing the pool.',
+  zoneKitchenInfo:'Open kitchen with island and generous preparation space.',
+  zonePoolInfo:'A 7 × 3 metre swimming pool framed by the terrace and sun loungers.',
+  zoneSalaInfo:'Covered outdoor dining and relaxation pavilion.'
+});
+Object.assign(t.fr,{
+  pageTitle:'Villa à vendre à Phuket, Rawai | Villa Manon',
+  why4:'Quatre chambres et cinq salles de bains offrant confort et intimité à la famille et aux invités',
+  featLeasehold:'Bail de 30 ans, renouvelable (de nombreuses possibilités).',
+  featConstructionYear:'Construction : 2026',
+  featLand:'Terrain de 480 m²',featBathrooms:'5 salles de bains',
+  featTV:'Sala avec téléviseur Samsung QLED 75 pouces',
+  featLivingTV:'Immense salon avec téléviseur Samsung QLED 75 pouces',
+  featBedroomTV:'Chaque chambre est équipée d’un téléviseur Samsung QLED 65 pouces',
+  featGasBarbecue:'Barbecue à gaz',
+  ownershipValue:'Bail de 30 ans, renouvelable (de nombreuses possibilités).',
+  valueQuietLand:'Terrain de 480 m² dans un environnement résidentiel calme',
+  valueRoomsPool:'4 chambres, 5 salles de bains et piscine privée',
+  closeLabel:'Fermer',previousPhotoLabel:'Photo précédente',nextPhotoLabel:'Photo suivante',
+  showPhotoLabel:'Afficher la photo',photoLabel:'photo',viewPhotosLabel:'Afficher les photos',
+  galleryDialogLabel:'Galerie photos de Villa Manon',zonePhotosDialogLabel:'Photos de la zone sélectionnée',
+  mapDialogLabel:'Carte de localisation de Villa Manon',enlargeMapLabel:'Agrandir la carte de localisation',
+  openPlanFullscreenLabel:'Ouvrir le plan en plein écran',
+  zoneBedroom1:'Chambre 1 et salle de bain',zoneBedroom2:'Chambre 2 et salle de bain',
+  zoneBedroom3:'Chambre 3 et salle de bain',zoneBedroom4:'Chambre 4 et salle de bain',
+  zoneLiving:'Salon et espace télévision',zoneKitchen:'Cuisine',zonePool:'Piscine privée',zoneSala:'Sala',
+  zoneBedroom1Info:'Chambre privée avec accès direct à sa salle de bain.',
+  zoneBedroom2Info:'Chambre calme située à côté de l’espace de vie central.',
+  zoneBedroom3Info:'Chambre spacieuse avec rangements intégrés.',
+  zoneBedroom4Info:'Chambre d’amis confortable à proximité du salon.',
+  zoneLivingInfo:'Grand espace de vie ouvert faisant face à la piscine.',
+  zoneKitchenInfo:'Cuisine ouverte avec îlot et vaste espace de préparation.',
+  zonePoolInfo:'Piscine de 7 × 3 mètres bordée par la terrasse et les bains de soleil.',
+  zoneSalaInfo:'Pavillon couvert pour les repas et la détente en plein air.'
+});
+Object.assign(t.ru,{
+  pageTitle:'Вилла на продажу на Пхукете, Раваи | Villa Manon',
+  why4:'Четыре спальни и пять ванных комнат обеспечивают комфорт и уединение для семьи и гостей',
+  featLeasehold:'Аренда на 30 лет, с возможностью продления (множество вариантов).',
+  featConstructionYear:'Год постройки: 2026',
+  featLand:'Площадь участка — 480 м²',featBathrooms:'5 ванных комнат',
+  featPool:'Частный бассейн 7 × 3 м',
+  featTV:'Сала с телевизором Samsung QLED 75 дюймов',
+  featLivingTV:'Огромная гостиная с телевизором Samsung QLED 75 дюймов',
+  featBedroomTV:'В каждой спальне установлен телевизор Samsung QLED 65 дюймов',
+  featGasBarbecue:'Газовый барбекю',
+  ownershipValue:'Аренда на 30 лет, с возможностью продления (множество вариантов).',
+  valueQuietLand:'Участок 480 м² в тихом жилом районе',
+  valueRoomsPool:'4 спальни, 5 ванных комнат и частный бассейн',
+  closeLabel:'Закрыть',previousPhotoLabel:'Предыдущее фото',nextPhotoLabel:'Следующее фото',
+  showPhotoLabel:'Показать фото',photoLabel:'фото',viewPhotosLabel:'Показать фотографии',
+  galleryDialogLabel:'Фотогалерея Villa Manon',zonePhotosDialogLabel:'Фотографии выбранной зоны',
+  mapDialogLabel:'Карта расположения Villa Manon',enlargeMapLabel:'Увеличить карту расположения',
+  openPlanFullscreenLabel:'Открыть план на весь экран',
+  zoneBedroom1:'Спальня 1 и ванная',zoneBedroom2:'Спальня 2 и ванная',
+  zoneBedroom3:'Спальня 3 и ванная',zoneBedroom4:'Спальня 4 и ванная',
+  zoneLiving:'Гостиная и ТВ-зона',zoneKitchen:'Кухня',zonePool:'Частный бассейн',zoneSala:'Сала',
+  zoneBedroom1Info:'Отдельная спальня с прямым доступом в ванную комнату.',
+  zoneBedroom2Info:'Тихая спальня рядом с центральной гостиной.',
+  zoneBedroom3Info:'Просторная спальня со встроенными местами для хранения.',
+  zoneBedroom4Info:'Уютная гостевая спальня рядом с гостиной.',
+  zoneLivingInfo:'Большое открытое пространство для общения с видом на бассейн.',
+  zoneKitchenInfo:'Открытая кухня с островом и просторной рабочей зоной.',
+  zonePoolInfo:'Бассейн размером 7 × 3 метра, окружённый террасой и шезлонгами.',
+  zoneSalaInfo:'Крытый павильон для отдыха и приёма пищи на открытом воздухе.'
+});
+Object.assign(t.th,{
+  pageTitle:'วิลล่าขายในภูเก็ต ราไวย์ | Villa Manon',
+  why4:'ห้องนอน 4 ห้องและห้องน้ำ 5 ห้อง มอบความสะดวกสบายและความเป็นส่วนตัวสำหรับครอบครัวและแขก',
+  featLeasehold:'สิทธิการเช่า 30 ปี ต่ออายุได้ (มีความเป็นไปได้หลากหลาย)',
+  featConstructionYear:'ปีที่ก่อสร้าง: 2026',
+  featLand:'ที่ดินขนาด 480 ตร.ม.',featBathrooms:'5 ห้องน้ำ',
+  featPool:'สระว่ายน้ำส่วนตัวขนาด 7 × 3 ม.',
+  featTV:'ศาลาพร้อมโทรทัศน์ Samsung QLED ขนาด 75 นิ้ว',
+  featLivingTV:'ห้องนั่งเล่นขนาดใหญ่พร้อมโทรทัศน์ Samsung QLED ขนาด 75 นิ้ว',
+  featBedroomTV:'ทุกห้องนอนติดตั้งโทรทัศน์ Samsung QLED ขนาด 65 นิ้ว',
+  featGasBarbecue:'เตาบาร์บีคิวแก๊ส',
+  ownershipValue:'สิทธิการเช่า 30 ปี ต่ออายุได้ (มีความเป็นไปได้หลากหลาย)',
+  valueQuietLand:'ที่ดินขนาด 480 ตร.ม. ในย่านที่อยู่อาศัยอันเงียบสงบ',
+  valueRoomsPool:'4 ห้องนอน 5 ห้องน้ำ และสระว่ายน้ำส่วนตัว',
+  closeLabel:'ปิด',previousPhotoLabel:'รูปก่อนหน้า',nextPhotoLabel:'รูปถัดไป',
+  showPhotoLabel:'แสดงรูป',photoLabel:'รูป',viewPhotosLabel:'ดูรูปภาพ',
+  galleryDialogLabel:'แกลเลอรีภาพ Villa Manon',zonePhotosDialogLabel:'รูปภาพของพื้นที่ที่เลือก',
+  mapDialogLabel:'แผนที่ตำแหน่ง Villa Manon',enlargeMapLabel:'ขยายแผนที่ตำแหน่ง',
+  openPlanFullscreenLabel:'เปิดแปลนแบบเต็มหน้าจอ',
+  zoneBedroom1:'ห้องนอน 1 และห้องน้ำ',zoneBedroom2:'ห้องนอน 2 และห้องน้ำ',
+  zoneBedroom3:'ห้องนอน 3 และห้องน้ำ',zoneBedroom4:'ห้องนอน 4 และห้องน้ำ',
+  zoneLiving:'ห้องนั่งเล่นและพื้นที่ทีวี',zoneKitchen:'ห้องครัว',zonePool:'สระว่ายน้ำส่วนตัว',zoneSala:'ศาลา',
+  zoneBedroom1Info:'ห้องนอนส่วนตัวที่เชื่อมต่อกับห้องน้ำโดยตรง',
+  zoneBedroom2Info:'ห้องนอนเงียบสงบติดกับพื้นที่นั่งเล่นส่วนกลาง',
+  zoneBedroom3Info:'ห้องนอนกว้างขวางพร้อมพื้นที่เก็บของในตัว',
+  zoneBedroom4Info:'ห้องนอนแขกแสนสบายใกล้ห้องนั่งเล่น',
+  zoneLivingInfo:'พื้นที่นั่งเล่นแบบเปิดโล่งขนาดใหญ่หันหน้าเข้าหาสระว่ายน้ำ',
+  zoneKitchenInfo:'ห้องครัวแบบเปิดพร้อมไอส์แลนด์และพื้นที่เตรียมอาหารกว้างขวาง',
+  zonePoolInfo:'สระว่ายน้ำขนาด 7 × 3 เมตร ล้อมรอบด้วยระเบียงและเก้าอี้อาบแดด',
+  zoneSalaInfo:'ศาลาในร่มสำหรับรับประทานอาหารและพักผ่อนกลางแจ้ง'
+});
+t.zh={...t.en,
+ pageTitle:'普吉岛拉威待售别墅 | Villa Manon',navHome:'首页',navVilla:'别墅',navGallery:'图库',navFeatures:'特色',navPlan:'平面图',navLocation:'位置',navInvestment:'投资',
+ waViewing:'预约看房',heroDiscover:'探索别墅',newVilla:'普吉岛拉威待售别墅',heroTitle:'普吉岛<br>待售别墅',heroText:'探索 Villa Manon：一座位于普吉岛拉威黄金地段、拥有四间卧室和私人泳池的现代热带别墅。',
+ bedrooms:'卧室',bathrooms:'浴室',privatePool:'私人<br>泳池',landSize:'土地面积',verifiedTitle:'合规保障',verifiedText:'文件依照泰国法律准备。',transparentTitle:'可售状态',transparentText:'别墅目前正在出售。',fastTitle:'快速回复',fastText:'快速回复您的问题和看房请求。',assistTitle:'专属协助',assistText:'在整个购房过程中提供个性化协助。',
+ whyTitle:'Villa Manon 的独特之处',why1:'拉威热门地段，兼具宁静、海滩、餐厅与日常便利',why2:'明亮流畅的空间，营造自然的室内外生活方式',why3:'私人泳池、露台和花园，尽享热带气候',why4:'四间卧室和五间浴室，为家人和宾客提供舒适与私密空间',why5:'家具齐全，可立即入住',
+ featuresTitle:'主要特色',featuresCatContract:'房产信息',featuresCatVilla:'别墅',featuresCatEquipment:'设备',galleryTitle:'照片图库',floorTitle:'别墅平面图',floorExploreTitle:'探索 Villa Manon 的布局',floorExploreText:'在建筑平面图与高级 3D 效果图之间切换。点击标记查看各个空间。',blueprint:'建筑平面图',design3d:'3D 设计',privatePoolText:'私人泳池',livingArea:'居住面积',seePhotos:'查看照片',fullscreen:'全屏',planHint:'点击标记 • 在全屏模式下双指缩放或双击放大',
+ livingLocationTitle:'拉威生活',livingTitle:'拉威生活',locationTitle:'位置与距离',livingLocationText:'Villa Manon 位于拉威优越地段，邻近海滩、本地市场、餐厅、码头和普吉岛著名观景点。',
+ simTitle:'投资模拟器',simText:'估算在拉威的潜在租金收入和投资回报。',sim1:'参数可调',sim2:'当地市场数据',sim3:'现实情景',sim4:'结果清晰',monthlyIncome:'预计每月租金收入',annualExpenses:'预计年度支出',resultsTitle:'预计结果（现实情景）',grossAnnual:'年度总收入',grossYield:'毛收益率：',annualCosts:'年度支出',netAnnual:'年度净收入',netYield:'净收益率：',roi:'投资回报',simNote:'结果仅供参考，基于用户输入的假设和当前市场状况。',
+ propertyInfo:'房产信息',whyPrice:'Villa Manon 的价值所在',readyTitle:'准备迈出下一步了吗？',readyText:'请联系我们预约私人看房或获取更多信息。',contactTitle:'Villa Manon 联系人',ownerLabel:'业主',ownerText:'欢迎联系我了解更多信息或安排私人看房。',directTitle:'直接联系我',scan:'扫描二维码或<a href="https://wa.me/66617142353" target="_blank" rel="noopener">点击此处</a>开始对话。',messageTitle:'给我留言',name:'您的姓名',email:'电子邮箱',phone:'电话 / WhatsApp',message:'您的留言',sendEmail:'通过电子邮件发送',viewAll:'查看全部 29 张照片 ↗',
+ destinationEyebrow:'目的地',discoverRawaiTitle:'探索拉威',discoverRawaiText:'探索拉威的海滩、餐厅、市场、岛屿和热带生活方式。',rawaiVideoTitle:'通过视频探索拉威',
+ featLeasehold:'30 年租赁权，可续期（多种可能性）。',featLand:'土地面积 480 平方米',featBuilt:'建筑面积约 250 平方米',featConstructionYear:'建造年份：2026',featBedrooms:'4 间宽敞卧室',featBathrooms:'5 间浴室',featPool:'7 × 3 米私人泳池',featKitchen:'设备齐全的厨房',featTV:'Sala 配备 75 英寸 Samsung QLED 电视',featLivingTV:'超大客厅配备 75 英寸 Samsung QLED 电视',featBedroomTV:'每间卧室均配备 65 英寸 Samsung QLED 电视',featGasBarbecue:'燃气烧烤炉',featGate:'自动门和有顶停车位',featWell:'100 米深水井',featAircon:'空调和吊扇',featWatering:'花园自动灌溉系统',featInternet:'高速光纤网络',
+ naiHarnBeach:'奈汉海滩',rawaiBeach:'拉威海滩',promthepCape:'神仙半岛',rawaiMarket:'拉威市场',watChalong:'查龙寺',bigBuddha:'普吉大佛',fiveMin:'5 分钟',fifteenMin:'15 分钟',twentyFiveMin:'25 分钟',perMonth:'/ 月',perYear:'/ 年',priceLabel:'价格',ownershipLabel:'产权形式',ownershipValue:'30 年租赁权，可续期（多种可能性）。',landTitleLabel:'土地权证',chanoteValue:'Chanote 地契',transferFeesLabel:'过户费用',furnishingLabel:'家具',furnishingValue:'家具齐全',availabilityLabel:'可入住时间',availabilityValue:'立即入住',valuePrimeLocation:'拉威黄金地段',valueQuietLand:'安静住宅区内的 480 平方米土地',valueConstruction:'2026 年建成，优质装修',valueRoomsPool:'4 间卧室、5 间浴室和私人泳池',valueReady:'家具齐全，可立即入住',valueRental:'租赁潜力强，长期价值突出',
+ galleryModalTitle:'Villa Manon — 照片图库',villaManonLabel:'Villa Manon',zoneLabel:'区域',blueprintCaption:'Villa Manon — 建筑平面图',zoomHint:'双指缩放或双击放大',closeLabel:'关闭',previousPhotoLabel:'上一张照片',nextPhotoLabel:'下一张照片',showPhotoLabel:'显示照片',photoLabel:'照片',viewPhotosLabel:'查看照片',galleryDialogLabel:'Villa Manon 照片图库',zonePhotosDialogLabel:'所选区域的照片',mapDialogLabel:'Villa Manon 位置地图',enlargeMapLabel:'放大位置地图',openPlanFullscreenLabel:'全屏打开平面图',
+ propertyOwnerBadge:'业主',rawaiPhuketBadge:'拉威，普吉岛',languagesBadge:'5 种语言',emailLabel:'电子邮箱',phoneLabel:'电话',whatsappQrTitle:'WhatsApp 二维码',
+ zoneBedroom1:'卧室 1 和浴室',zoneBedroom2:'卧室 2 和浴室',zoneBedroom3:'卧室 3 和浴室',zoneBedroom4:'卧室 4 和浴室',zoneLiving:'客厅和电视区',zoneKitchen:'厨房',zonePool:'私人泳池',zoneSala:'Sala 凉亭',zoneBedroom1Info:'带独立浴室入口的私人卧室。',zoneBedroom2Info:'位于中央起居区旁的安静卧室。',zoneBedroom3Info:'带内置储物空间的宽敞卧室。',zoneBedroom4Info:'靠近客厅的舒适客房。',zoneLivingInfo:'面向泳池的大型开放式社交空间。',zoneKitchenInfo:'带中岛和宽敞备餐区的开放式厨房。',zonePoolInfo:'7 × 3 米泳池，周围设有露台和躺椅。',zoneSalaInfo:'适合户外用餐和休闲的有顶凉亭。'
+};
+Object.assign(t.en,{languagesBadge:'5 languages'});
+Object.assign(t.fr,{languagesBadge:'5 langues'});
+Object.assign(t.ru,{languagesBadge:'5 языков'});
+Object.assign(t.th,{languagesBadge:'5 ภาษา'});
+
+function applySaleCorrections(d){
+  document.querySelectorAll('[data-i18n="bathrooms"]').forEach(label=>{
+    const textNode=[...label.parentElement.childNodes].find(node=>node.nodeType===Node.TEXT_NODE&&node.textContent.trim());
+    if(textNode) textNode.textContent='5';
+  });
+  document.querySelectorAll('[data-i18n="landSize"]').forEach(label=>{
+    const textNode=[...label.parentElement.childNodes].find(node=>node.nodeType===Node.TEXT_NODE&&node.textContent.trim());
+    if(textNode) textNode.textContent='480 m²';
+  });
+  document.querySelectorAll('li[data-i18n="featBuilt"]').forEach(item=>{
+    let construction=item.nextElementSibling;
+    if(!construction||construction.dataset.propertyInfo!=='construction-year'){
+      construction=document.createElement('li');
+      construction.dataset.propertyInfo='construction-year';
+      item.after(construction);
+    }
+    construction.innerHTML=d.featConstructionYear??t.en.featConstructionYear;
+  });
+  document.querySelectorAll('li[data-i18n="featTV"]').forEach(item=>{
+    item.innerHTML=d.featTV??t.en.featTV;
+    let living=item.nextElementSibling;
+    if(!living||living.dataset.saleEquipment!=='living'){
+      living=document.createElement('li');
+      living.dataset.saleEquipment='living';
+      item.after(living);
+    }
+    living.innerHTML=d.featLivingTV??t.en.featLivingTV;
+    let bedrooms=living.nextElementSibling;
+    if(!bedrooms||bedrooms.dataset.saleEquipment!=='bedrooms'){
+      bedrooms=document.createElement('li');
+      bedrooms.dataset.saleEquipment='bedrooms';
+      living.after(bedrooms);
+    }
+    bedrooms.innerHTML=d.featBedroomTV??t.en.featBedroomTV;
+    let barbecue=bedrooms.nextElementSibling;
+    if(!barbecue||barbecue.dataset.saleEquipment!=='barbecue'){
+      barbecue=document.createElement('li');
+      barbecue.dataset.saleEquipment='barbecue';
+      bedrooms.after(barbecue);
+    }
+    barbecue.innerHTML=d.featGasBarbecue??t.en.featGasBarbecue;
+  });
+
+  const zoneKeys={
+    'bedroom-1':['zoneBedroom1','zoneBedroom1Info'],
+    'bedroom-2':['zoneBedroom2','zoneBedroom2Info'],
+    'bedroom-3':['zoneBedroom3','zoneBedroom3Info'],
+    'bedroom-4':['zoneBedroom4','zoneBedroom4Info'],
+    'living-tv':['zoneLiving','zoneLivingInfo'],
+    kitchen:['zoneKitchen','zoneKitchenInfo'],pool:['zonePool','zonePoolInfo'],sala:['zoneSala','zoneSalaInfo']
+  };
+  document.querySelectorAll('[data-zone]').forEach(hotspot=>{
+    const keys=zoneKeys[hotspot.dataset.zone];
+    if(!keys) return;
+    const title=d[keys[0]]??t.en[keys[0]];
+    hotspot.dataset.title=title;
+    hotspot.dataset.info=d[keys[1]]??t.en[keys[1]];
+    hotspot.setAttribute('aria-label',(d.viewPhotosLabel??t.en.viewPhotosLabel)+' : '+title);
+  });
+
+  const labels=[
+    ['#bedroomGallery','aria-label','galleryDialogLabel'],
+    ['#zonePhotoModal','aria-label','zonePhotosDialogLabel'],
+    ['#mapPhotoModal','aria-label','mapDialogLabel'],
+    ['#galleryClose','aria-label','closeLabel'],
+    ['#zonePhotoClose','aria-label','closeLabel'],
+    ['#zonePhotoPrev','aria-label','previousPhotoLabel'],
+    ['#zonePhotoNext','aria-label','nextPhotoLabel'],
+    ['#planLightboxClose','aria-label','closeLabel'],
+    ['#planExpand','aria-label','openPlanFullscreenLabel'],
+    ['.map-photo-modal__close','aria-label','closeLabel']
+  ];
+  labels.forEach(([selector,attribute,key])=>{
+    document.querySelectorAll(selector).forEach(element=>element.setAttribute(attribute,d[key]??t.en[key]));
+  });
+  document.querySelectorAll('.gallery-modal__prev').forEach(button=>button.setAttribute('aria-label',d.previousPhotoLabel??t.en.previousPhotoLabel));
+  document.querySelectorAll('.gallery-modal__next').forEach(button=>button.setAttribute('aria-label',d.nextPhotoLabel??t.en.nextPhotoLabel));
+  document.querySelectorAll('.gallery-modal__dot').forEach((dot,index)=>dot.setAttribute('aria-label',(d.showPhotoLabel??t.en.showPhotoLabel)+' '+(index+1)));
+  document.querySelectorAll('.gallery-modal__slide img').forEach((img,index)=>img.alt='Villa Manon — '+(d.photoLabel??t.en.photoLabel)+' '+(index+1));
+  document.querySelectorAll('.map-wrap img').forEach(img=>img.setAttribute('aria-label',d.enlargeMapLabel??t.en.enlargeMapLabel));
+
+  const zoneModal=document.querySelector('#zonePhotoModal');
+  if(zoneModal?.dataset.activeZone&&zoneKeys[zoneModal.dataset.activeZone]){
+    const titleKey=zoneKeys[zoneModal.dataset.activeZone][0];
+    const title=document.querySelector('#zonePhotoTitle');
+    if(title) title.textContent=d[titleKey]??t.en[titleKey];
+  }
+}
 function safeStorageGet(key){
   try{return window.localStorage.getItem(key)}
   catch(error){return null}
@@ -313,10 +559,22 @@ function applyLang(l){
     button.classList.toggle('active',active);
     button.setAttribute('aria-selected',active?'true':'false');
   });
+  applySaleCorrections(d);
+}
+const languageSelect=document.querySelector('#lang');
+const languageMenu=document.querySelector('#languagePickerMenu');
+if(languageSelect&&!languageSelect.querySelector('option[value="zh"]')){
+  const option=document.createElement('option');
+  option.value='zh';option.textContent='中文';languageSelect.appendChild(option);
+}
+if(languageMenu&&!languageMenu.querySelector('[data-lang="zh"]')){
+  const button=document.createElement('button');
+  button.type='button';button.dataset.lang='zh';button.setAttribute('role','option');button.textContent='中文';
+  languageMenu.appendChild(button);
 }
 const saved=safeStorageGet('villaLang');
 const auto=(navigator.language||'en').slice(0,2);
-applyLang(saved||(['fr','th','ru'].includes(auto)?auto:'en'));
+applyLang(saved||(['fr','th','ru','zh'].includes(auto)?auto:'en'));
 document.querySelector('#lang').addEventListener('change',event=>{
   applyLang(event.target.value);
 });
@@ -426,14 +684,14 @@ Phone / WhatsApp: ${p}`;
   const salaPhotos=[allPhotos[5],allPhotos[6]].filter(Boolean);
 
   const zonePhotos={
-    'bedroom-1':{title:'Chambre 1 & salle de bain',indexes:[15,16,17,18,25,26]},
-    'bedroom-2':{title:'Chambre 2 & salle de bain',indexes:[19,20,21,22,27]},
-    'bedroom-3':{title:'Chambre 3 & salle de bain',indexes:[23,24,28]},
-    'bedroom-4':{title:'Chambre 4 & salle de bain',indexes:[15,19,23,25,27,28]},
-    'living-tv':{title:'Salon & espace télévision',indexes:[7,8,13,14]},
-    'kitchen':{title:'Cuisine',indexes:[9,10,11,12]},
-    'pool':{title:'Piscine',sources:poolPhotos},
-    'sala':{title:'Sala',sources:salaPhotos}
+    'bedroom-1':{titleKey:'zoneBedroom1',indexes:[15,16,17,18,25,26]},
+    'bedroom-2':{titleKey:'zoneBedroom2',indexes:[19,20,21,22,27]},
+    'bedroom-3':{titleKey:'zoneBedroom3',indexes:[23,24,28]},
+    'bedroom-4':{titleKey:'zoneBedroom4',indexes:[15,19,23,25,27,28]},
+    'living-tv':{titleKey:'zoneLiving',indexes:[7,8,13,14]},
+    'kitchen':{titleKey:'zoneKitchen',indexes:[9,10,11,12]},
+    'pool':{titleKey:'zonePool',sources:poolPhotos},
+    'sala':{titleKey:'zoneSala',sources:salaPhotos}
   };
 
   const modal=document.querySelector('#zonePhotoModal');
@@ -453,7 +711,8 @@ Phone / WhatsApp: ${p}`;
     if(!activePhotos.length) return;
 
     modalImage.src=activePhotos[activeIndex];
-    modalImage.alt=modalTitle.textContent+' — photo '+(activeIndex+1);
+    const translations=t[document.documentElement.lang]??t.en;
+    modalImage.alt=modalTitle.textContent+' — '+(translations.photoLabel??t.en.photoLabel)+' '+(activeIndex+1);
     modalCounter.textContent=(activeIndex+1)+' / '+activePhotos.length;
 
     [...dotsWrap.children].forEach((dot,index)=>{
@@ -472,7 +731,9 @@ Phone / WhatsApp: ${p}`;
     if(!activePhotos.length) return;
 
     activeIndex=0;
-    modalTitle.textContent=selection.title;
+    const translations=t[document.documentElement.lang]??t.en;
+    modal.dataset.activeZone=zone;
+    modalTitle.textContent=translations[selection.titleKey]??t.en[selection.titleKey];
 
     dotsWrap.innerHTML='';
 
@@ -480,7 +741,7 @@ Phone / WhatsApp: ${p}`;
       const dot=document.createElement('button');
       dot.type='button';
       dot.className='zone-photo-modal__dot';
-      dot.setAttribute('aria-label','Afficher la photo '+(index+1));
+      dot.setAttribute('aria-label',(translations.showPhotoLabel??t.en.showPhotoLabel)+' '+(index+1));
       dot.addEventListener('click',()=>{
         activeIndex=index;
         renderZonePhoto();

@@ -102,12 +102,18 @@
   const closeBtn=modal && modal.querySelector(".map-photo-modal__close");
 
   if(mapImg && modal && modalImg && viewport){
+    const copy=(key,fallback)=>{
+      const language=document.documentElement.lang||"en";
+      return typeof t!=="undefined" ? (t[language]?.[key]??t.en?.[key]??fallback) : fallback;
+    };
     modalImg.src=mapImg.currentSrc || mapImg.src;
     makeZoomable(modalImg,viewport);
 
     mapImg.setAttribute("tabindex","0");
     mapImg.setAttribute("role","button");
-    mapImg.setAttribute("aria-label","Agrandir la carte de localisation");
+    mapImg.setAttribute("aria-label",copy("enlargeMapLabel","Enlarge the location map"));
+    modal.setAttribute("aria-label",copy("mapDialogLabel","Villa Manon location map"));
+    closeBtn?.setAttribute("aria-label",copy("closeLabel","Close"));
 
     function openMap(){
       modalImg.src=mapImg.currentSrc || mapImg.src;
