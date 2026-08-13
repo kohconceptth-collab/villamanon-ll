@@ -30,6 +30,8 @@ galleryPreviewReplacements.forEach(({position,src,alt,galleryIndex})=>{
   image.dataset.galleryIndex=galleryIndex;
 });
 const bedroomGallery=document.querySelector('#bedroomGallery');
+const galleryCounter=document.querySelector('.gallery-modal__counter');
+if(bedroomGallery && galleryCounter) bedroomGallery.appendChild(galleryCounter);
 const excludedGalleryFiles=['image-04-0ec59cb812.webp','image-05-3db7afa9df.webp','image-06-74e66adf2f.webp'];
 [...document.querySelectorAll('#galleryTrack .gallery-modal__slide')].forEach(slide=>{
  const source=slide.querySelector('img')?.getAttribute('src')||'';
@@ -820,7 +822,6 @@ Phone / WhatsApp: ${p}`;
   document.querySelectorAll('#planHotspots .hotspot').forEach(hotspot=>{
     hotspot.addEventListener('click',event=>{
       event.preventDefault();
-      if(!window.matchMedia('(min-width:1025px)').matches) return;
       openZone(hotspot.dataset.zone);
     });
   });
