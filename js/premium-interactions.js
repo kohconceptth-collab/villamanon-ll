@@ -1,4 +1,4 @@
-(()=>{
+﻿(()=>{
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Apparitions des sections et de leurs principaux composants */
@@ -96,12 +96,14 @@
     const zoneIndexes={
       'bedroom-1':15,
       'bedroom-2':19,
-      'bedroom-3':23,
-      'bedroom-4':25,
       'living-tv':7,
       'kitchen':9,
       'pool':5,
       'sala':6
+    };
+    const zonePreviewSources={
+      'bedroom-3':'assets/images/image-38-ace141763b.webp',
+      'bedroom-4':'assets/images/image-39-7b512ff181.webp'
     };
 
     let hideTimer;
@@ -110,7 +112,7 @@
       if(!window.matchMedia('(min-width:1025px)').matches) return;
       clearTimeout(hideTimer);
       const index=zoneIndexes[hotspot.dataset.zone] ?? 0;
-      const source=galleryImages[index]||galleryImages[0];
+      const source=zonePreviewSources[hotspot.dataset.zone]||galleryImages[index]||galleryImages[0];
       previewImage.src=source;
       previewImage.alt=hotspot.dataset.title||'Aperçu de la pièce';
       previewTitle.textContent=hotspot.dataset.title||'Villa Manon';

@@ -1,4 +1,4 @@
-const PRICE=22000000, WA='66617142353';
+﻿const PRICE=22000000, WA='66617142353';
 const fmt=n=>new Intl.NumberFormat('en-US').format(Math.round(n));
 function calc(){const r=+document.querySelector('#rent').value,e=+document.querySelector('#expenses').value,g=r*12,n=g-e;document.querySelector('#rentVal').textContent=fmt(r);document.querySelector('#expenseVal').textContent=fmt(e);document.querySelector('#gross').textContent=fmt(g)+' THB';document.querySelector('#costs').textContent='−'+fmt(e)+' THB';document.querySelector('#net').textContent=fmt(n)+' THB';document.querySelector('#grossYield').textContent=(g/PRICE*100).toFixed(1)+'%';document.querySelector('#netYield').textContent=(n/PRICE*100).toFixed(1)+'%';document.querySelector('#roi').textContent=(PRICE/n).toFixed(1)+' years'}
 
@@ -17,9 +17,9 @@ investmentSimulatorToggle.addEventListener('click',()=>{
 });
 const menu=document.querySelector('#menu'),hamb=document.querySelector('#hamb');hamb.addEventListener('click',()=>menu.classList.toggle('open'));document.addEventListener('keydown',e=>{if(e.key==='Escape')menu.classList.remove('open')});document.addEventListener('click',e=>{if(menu.classList.contains('open')&&!menu.contains(e.target)&&e.target!==hamb)menu.classList.remove('open')});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
 const galleryPreviewReplacements=[
-  {position:1,src:'assets/images/image-20-748c9482b2.webp',alt:'Villa Manon sala and pool terrace',galleryIndex:5},
-  {position:2,src:'assets/images/image-22-06edf2089a.webp',alt:'Villa Manon living room facing the pool',galleryIndex:7},
-  {position:3,src:'assets/images/image-23-f837eb1e2a.webp',alt:'Villa Manon open-plan living room and kitchen',galleryIndex:8}
+  {position:1,src:'assets/images/image-20-748c9482b2.webp',alt:'Villa Manon sala and pool terrace',galleryIndex:2},
+  {position:2,src:'assets/images/image-22-06edf2089a.webp',alt:'Villa Manon living room facing the pool',galleryIndex:4},
+  {position:3,src:'assets/images/image-23-f837eb1e2a.webp',alt:'Villa Manon open-plan living room and kitchen',galleryIndex:5}
 ];
 const galleryPreviewImages=[...document.querySelectorAll('.gallery-grid img')];
 galleryPreviewReplacements.forEach(({position,src,alt,galleryIndex})=>{
@@ -30,11 +30,56 @@ galleryPreviewReplacements.forEach(({position,src,alt,galleryIndex})=>{
   image.dataset.galleryIndex=galleryIndex;
 });
 const bedroomGallery=document.querySelector('#bedroomGallery');
+const excludedGalleryFiles=['image-04-0ec59cb812.webp','image-05-3db7afa9df.webp','image-06-74e66adf2f.webp'];
+[...document.querySelectorAll('#galleryTrack .gallery-modal__slide')].forEach(slide=>{
+ const source=slide.querySelector('img')?.getAttribute('src')||'';
+ if(excludedGalleryFiles.some(file=>source.includes(file))) slide.remove();
+});
+document.querySelectorAll('.gallery-modal__bottom .gallery-modal__dot').forEach(dot=>dot.remove());
 const galleryTrack=document.querySelector('#galleryTrack');
 const galleryCurrent=document.querySelector('#galleryCurrent');
 const galleryTotal=document.querySelector('#galleryTotal');
-const galleryDots=[...document.querySelectorAll('.gallery-modal__dot')];
 const gallerySlides=[...document.querySelectorAll('.gallery-modal__slide')];
+const galleryDotsWrap=document.querySelector('.gallery-modal__bottom');
+const galleryDots=gallerySlides.map((_,index)=>{const dot=document.createElement('button');dot.type='button';dot.className='gallery-modal__dot';dot.dataset.galleryIndex=String(index);galleryDotsWrap.appendChild(dot);return dot});
+const galleryClose=document.querySelector('#galleryClose');
+const galleryTopActions=document.createElement('div');galleryTopActions.className='gallery-modal__actions';
+const galleryDownload=document.createElement('a');galleryDownload.id='galleryDownload';galleryDownload.className='gallery-modal__download';galleryDownload.download='';galleryDownload.innerHTML='<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></svg>';
+galleryClose.before(galleryTopActions);galleryTopActions.append(galleryDownload,galleryClose);
+function triggerGalleryDownload(blob,filename){
+  const objectUrl=URL.createObjectURL(blob);
+  const anchor=document.createElement('a');
+  anchor.href=objectUrl;anchor.download=filename;
+  document.body.appendChild(anchor);anchor.click();anchor.remove();
+  setTimeout(()=>URL.revokeObjectURL(objectUrl),1500);
+}
+async function downloadCurrentGalleryImage(event){
+  event.preventDefault();event.stopPropagation();
+  const image=gallerySlides[galleryIndex]?.querySelector('img');
+  if(!image) return;
+  const source=image.currentSrc||image.src;
+  const baseName='villa-manon-photo-'+String(galleryIndex+1).padStart(2,'0');
+  try{
+    if(location.protocol!=='file:'){
+      const response=await fetch(source,{cache:'force-cache'});
+      if(!response.ok) throw new Error('Image unavailable');
+      const blob=await response.blob();
+      const extension=(blob.type.split('/')[1]||'jpg').replace('jpeg','jpg');
+      triggerGalleryDownload(blob,baseName+'.'+extension);
+      return;
+    }
+    const canvas=document.createElement('canvas');
+    canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
+    canvas.getContext('2d').drawImage(image,0,0);
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+    if(!blob) throw new Error('Download unavailable');
+    triggerGalleryDownload(blob,baseName+'.png');
+  }catch(error){
+    console.error('Gallery download failed',error);
+  }
+}
+galleryDownload.addEventListener('pointerdown',event=>event.stopPropagation());
+galleryDownload.addEventListener('click',downloadCurrentGalleryImage);
 galleryTotal.textContent=gallerySlides.length;
 let galleryIndex=0, galleryStartX=0, galleryDeltaX=0, galleryDragging=false;
 function renderGallery(animate=true){
@@ -42,6 +87,8 @@ function renderGallery(animate=true){
   galleryTrack.style.transform=`translate3d(${-galleryIndex*100}%,0,0)`;
   galleryCurrent.textContent=galleryIndex+1;
   galleryDots.forEach((d,i)=>d.classList.toggle('active',i===galleryIndex));
+  const currentImage=gallerySlides[galleryIndex]?.querySelector('img');
+  if(currentImage){const source=currentImage.currentSrc||currentImage.src;galleryDownload.href=source;galleryDownload.download=source.split('/').pop().split('?')[0]||('villa-manon-photo-'+(galleryIndex+1)+'.jpg')} 
 }
 function openGallery(index=0){
   galleryIndex=Math.max(0,Math.min(gallerySlides.length-1,index));
@@ -307,7 +354,7 @@ Object.assign(t.en,{
   ownershipValue:'30-year leasehold, renewable (many possibilities).',
   valueQuietLand:'480 m² land size in a quiet residential setting',
   valueRoomsPool:'4 bedrooms, 5 bathrooms and a private pool',
-  closeLabel:'Close',previousPhotoLabel:'Previous photo',nextPhotoLabel:'Next photo',
+  downloadPhotoLabel:'Download photo',closeLabel:'Close',previousPhotoLabel:'Previous photo',nextPhotoLabel:'Next photo',
   showPhotoLabel:'Show photo',photoLabel:'photo',viewPhotosLabel:'View photos',
   galleryDialogLabel:'Villa Manon photo gallery',zonePhotosDialogLabel:'Photos of the selected area',
   mapDialogLabel:'Villa Manon location map',enlargeMapLabel:'Enlarge the location map',
@@ -337,7 +384,7 @@ Object.assign(t.fr,{
   ownershipValue:'Bail de 30 ans, renouvelable (de nombreuses possibilités).',
   valueQuietLand:'Terrain de 480 m² dans un environnement résidentiel calme',
   valueRoomsPool:'4 chambres, 5 salles de bains et piscine privée',
-  closeLabel:'Fermer',previousPhotoLabel:'Photo précédente',nextPhotoLabel:'Photo suivante',
+  downloadPhotoLabel:'Télécharger la photo',closeLabel:'Fermer',previousPhotoLabel:'Photo précédente',nextPhotoLabel:'Photo suivante',
   showPhotoLabel:'Afficher la photo',photoLabel:'photo',viewPhotosLabel:'Afficher les photos',
   galleryDialogLabel:'Galerie photos de Villa Manon',zonePhotosDialogLabel:'Photos de la zone sélectionnée',
   mapDialogLabel:'Carte de localisation de Villa Manon',enlargeMapLabel:'Agrandir la carte de localisation',
@@ -368,7 +415,7 @@ Object.assign(t.ru,{
   ownershipValue:'Аренда на 30 лет, с возможностью продления (множество вариантов).',
   valueQuietLand:'Участок 480 м² в тихом жилом районе',
   valueRoomsPool:'4 спальни, 5 ванных комнат и частный бассейн',
-  closeLabel:'Закрыть',previousPhotoLabel:'Предыдущее фото',nextPhotoLabel:'Следующее фото',
+  downloadPhotoLabel:'Скачать фото',closeLabel:'Закрыть',previousPhotoLabel:'Предыдущее фото',nextPhotoLabel:'Следующее фото',
   showPhotoLabel:'Показать фото',photoLabel:'фото',viewPhotosLabel:'Показать фотографии',
   galleryDialogLabel:'Фотогалерея Villa Manon',zonePhotosDialogLabel:'Фотографии выбранной зоны',
   mapDialogLabel:'Карта расположения Villa Manon',enlargeMapLabel:'Увеличить карту расположения',
@@ -399,7 +446,7 @@ Object.assign(t.th,{
   ownershipValue:'สิทธิการเช่า 30 ปี ต่ออายุได้ (มีความเป็นไปได้หลากหลาย)',
   valueQuietLand:'ที่ดินขนาด 480 ตร.ม. ในย่านที่อยู่อาศัยอันเงียบสงบ',
   valueRoomsPool:'4 ห้องนอน 5 ห้องน้ำ และสระว่ายน้ำส่วนตัว',
-  closeLabel:'ปิด',previousPhotoLabel:'รูปก่อนหน้า',nextPhotoLabel:'รูปถัดไป',
+  downloadPhotoLabel:'ดาวน์โหลดรูปภาพ',closeLabel:'ปิด',previousPhotoLabel:'รูปก่อนหน้า',nextPhotoLabel:'รูปถัดไป',
   showPhotoLabel:'แสดงรูป',photoLabel:'รูป',viewPhotosLabel:'ดูรูปภาพ',
   galleryDialogLabel:'แกลเลอรีภาพ Villa Manon',zonePhotosDialogLabel:'รูปภาพของพื้นที่ที่เลือก',
   mapDialogLabel:'แผนที่ตำแหน่ง Villa Manon',enlargeMapLabel:'ขยายแผนที่ตำแหน่ง',
@@ -428,7 +475,7 @@ t.zh={...t.en,
  destinationEyebrow:'目的地',discoverRawaiTitle:'探索拉威',discoverRawaiText:'探索拉威的海滩、餐厅、市场、岛屿和热带生活方式。',rawaiVideoTitle:'通过视频探索拉威',
  featLeasehold:'30 年租赁权，可续期（多种可能性）。',featLand:'土地面积 480 平方米',featBuilt:'建筑面积约 250 平方米',featConstructionYear:'建造年份：2026',featBedrooms:'4 间宽敞卧室',featBathrooms:'5 间浴室',featPool:'7 × 3 米私人泳池',featKitchen:'设备齐全的厨房',featTV:'Sala 配备 75 英寸 Samsung QLED 电视',featLivingTV:'超大客厅配备 75 英寸 Samsung QLED 电视',featBedroomTV:'每间卧室均配备 65 英寸 Samsung QLED 电视',featGasBarbecue:'燃气烧烤炉',featGate:'自动门和有顶停车位',featWell:'100 米深水井',featAircon:'空调和吊扇',featWatering:'花园自动灌溉系统',featInternet:'高速光纤网络',
  naiHarnBeach:'奈汉海滩',rawaiBeach:'拉威海滩',promthepCape:'神仙半岛',rawaiMarket:'拉威市场',watChalong:'查龙寺',bigBuddha:'普吉大佛',fiveMin:'5 分钟',fifteenMin:'15 分钟',twentyFiveMin:'25 分钟',perMonth:'/ 月',perYear:'/ 年',priceLabel:'价格',ownershipLabel:'产权形式',ownershipValue:'30 年租赁权，可续期（多种可能性）。',landTitleLabel:'土地权证',chanoteValue:'Chanote 地契',transferFeesLabel:'过户费用',furnishingLabel:'家具',furnishingValue:'家具齐全',availabilityLabel:'可入住时间',availabilityValue:'立即入住',valuePrimeLocation:'拉威黄金地段',valueQuietLand:'安静住宅区内的 480 平方米土地',valueConstruction:'2026 年建成，优质装修',valueRoomsPool:'4 间卧室、5 间浴室和私人泳池',valueReady:'家具齐全，可立即入住',valueRental:'租赁潜力强，长期价值突出',
- galleryModalTitle:'Villa Manon — 照片图库',villaManonLabel:'Villa Manon',zoneLabel:'区域',blueprintCaption:'Villa Manon — 建筑平面图',zoomHint:'双指缩放或双击放大',closeLabel:'关闭',previousPhotoLabel:'上一张照片',nextPhotoLabel:'下一张照片',showPhotoLabel:'显示照片',photoLabel:'照片',viewPhotosLabel:'查看照片',galleryDialogLabel:'Villa Manon 照片图库',zonePhotosDialogLabel:'所选区域的照片',mapDialogLabel:'Villa Manon 位置地图',enlargeMapLabel:'放大位置地图',openPlanFullscreenLabel:'全屏打开平面图',
+ galleryModalTitle:'Villa Manon — 照片图库',villaManonLabel:'Villa Manon',zoneLabel:'区域',blueprintCaption:'Villa Manon — 建筑平面图',zoomHint:'双指缩放或双击放大',downloadPhotoLabel:'下载照片',closeLabel:'关闭',previousPhotoLabel:'上一张照片',nextPhotoLabel:'下一张照片',showPhotoLabel:'显示照片',photoLabel:'照片',viewPhotosLabel:'查看照片',galleryDialogLabel:'Villa Manon 照片图库',zonePhotosDialogLabel:'所选区域的照片',mapDialogLabel:'Villa Manon 位置地图',enlargeMapLabel:'放大位置地图',openPlanFullscreenLabel:'全屏打开平面图',
  propertyOwnerBadge:'业主',rawaiPhuketBadge:'拉威，普吉岛',languagesBadge:'5 种语言',emailLabel:'电子邮箱',phoneLabel:'电话',whatsappQrTitle:'WhatsApp 二维码',
  zoneBedroom1:'卧室 1 和浴室',zoneBedroom2:'卧室 2 和浴室',zoneBedroom3:'卧室 3 和浴室',zoneBedroom4:'卧室 4 和浴室',zoneLiving:'客厅和电视区',zoneKitchen:'厨房',zonePool:'私人泳池',zoneSala:'Sala 凉亭',zoneBedroom1Info:'带独立浴室入口的私人卧室。',zoneBedroom2Info:'位于中央起居区旁的安静卧室。',zoneBedroom3Info:'带内置储物空间的宽敞卧室。',zoneBedroom4Info:'靠近客厅的舒适客房。',zoneLivingInfo:'面向泳池的大型开放式社交空间。',zoneKitchenInfo:'带中岛和宽敞备餐区的开放式厨房。',zonePoolInfo:'7 × 3 米泳池，周围设有露台和躺椅。',zoneSalaInfo:'适合户外用餐和休闲的有顶凉亭。'
 };
@@ -501,6 +548,7 @@ function applySaleCorrections(d){
     ['#bedroomGallery','aria-label','galleryDialogLabel'],
     ['#zonePhotoModal','aria-label','zonePhotosDialogLabel'],
     ['#mapPhotoModal','aria-label','mapDialogLabel'],
+    ['#galleryDownload','aria-label','downloadPhotoLabel'],
     ['#galleryClose','aria-label','closeLabel'],
     ['#zonePhotoClose','aria-label','closeLabel'],
     ['#zonePhotoPrev','aria-label','previousPhotoLabel'],
@@ -510,7 +558,7 @@ function applySaleCorrections(d){
     ['.map-photo-modal__close','aria-label','closeLabel']
   ];
   labels.forEach(([selector,attribute,key])=>{
-    document.querySelectorAll(selector).forEach(element=>element.setAttribute(attribute,d[key]??t.en[key]));
+    document.querySelectorAll(selector).forEach(element=>{const value=d[key]??t.en[key];element.setAttribute(attribute,value);if(selector==='#galleryDownload')element.setAttribute('title',value)});
   });
   document.querySelectorAll('.gallery-modal__prev').forEach(button=>button.setAttribute('aria-label',d.previousPhotoLabel??t.en.previousPhotoLabel));
   document.querySelectorAll('.gallery-modal__next').forEach(button=>button.setAttribute('aria-label',d.nextPhotoLabel??t.en.nextPhotoLabel));
@@ -677,19 +725,19 @@ Phone / WhatsApp: ${p}`;
     ...document.querySelectorAll('.gallery-grid img[alt="Villa pool"], .gallery-grid img[alt="Villa Manon private pool"]')
   ].map(image=>image.currentSrc||image.src).filter(Boolean);
 
-  [allPhotos[5],allPhotos[6]].forEach(photo=>{
+  [allPhotos[2],allPhotos[3]].forEach(photo=>{
     if(photo && !poolPhotos.includes(photo)) poolPhotos.push(photo);
   });
 
-  const salaPhotos=[allPhotos[5],allPhotos[6]].filter(Boolean);
+  const salaPhotos=[allPhotos[2],allPhotos[3]].filter(Boolean);
 
   const zonePhotos={
-    'bedroom-1':{titleKey:'zoneBedroom1',indexes:[15,16,17,18,25,26]},
-    'bedroom-2':{titleKey:'zoneBedroom2',indexes:[19,20,21,22,27]},
-    'bedroom-3':{titleKey:'zoneBedroom3',indexes:[23,24,28]},
-    'bedroom-4':{titleKey:'zoneBedroom4',indexes:[15,19,23,25,27,28]},
-    'living-tv':{titleKey:'zoneLiving',indexes:[7,8,13,14]},
-    'kitchen':{titleKey:'zoneKitchen',indexes:[9,10,11,12]},
+    'bedroom-1':{titleKey:'zoneBedroom1',indexes:[12,13,14,15,22,23]},
+    'bedroom-2':{titleKey:'zoneBedroom2',indexes:[16,17,18,19,24]},
+    'bedroom-3':{titleKey:'zoneBedroom3',indexes:[20,21,25]},
+    'bedroom-4':{titleKey:'zoneBedroom4',indexes:[12,16,20,22,24,25]},
+    'living-tv':{titleKey:'zoneLiving',indexes:[4,5,10,11]},
+    'kitchen':{titleKey:'zoneKitchen',indexes:[6,7,8,9]},
     'pool':{titleKey:'zonePool',sources:poolPhotos},
     'sala':{titleKey:'zoneSala',sources:salaPhotos}
   };
